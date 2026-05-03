@@ -63,6 +63,12 @@ export default function InventoryApp() {
         updatedData.salidas = (Number(p.salidas) || 0) + Math.abs(amount);
       }
       
+      // Recalcular stockActual antes de enviarlo
+      const inicial = Number(updatedData.stockInicial) || 0;
+      const entradas = Number(updatedData.entradas) || 0;
+      const salidas = Number(updatedData.salidas) || 0;
+      updatedData.stockActual = inicial + entradas - salidas;
+      
       await updateProduct(sku, updatedData);
       await fetchProducts();
       setMovementModal({ isOpen: false, type: 'in', product: null });
