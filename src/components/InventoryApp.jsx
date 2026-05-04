@@ -265,9 +265,7 @@ export default function InventoryApp() {
                             <div className="flex flex-col">
                               <span className="text-sm font-medium text-slate-700">{p.categoria || '-'}</span>
                               <span className="text-[11px] text-slate-500 mt-1">
-                                {p.talla && `Talla: ${p.talla} `}
-                                {p.color && `| Color: ${p.color} `}
-                                {p.marca && `| Marca: ${p.marca}`}
+                                Talla: {p.talla || '-'} | Color: {p.color || '-'} | Marca: {p.marca || '-'}
                               </span>
                             </div>
                           </td>
