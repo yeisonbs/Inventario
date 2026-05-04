@@ -243,7 +243,7 @@ export default function InventoryApp() {
                   <thead className="bg-slate-50 border-b border-slate-200">
                     <tr>
                       <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider whitespace-nowrap">Producto</th>
-                      <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Categoría / Ubic.</th>
+                      <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Categoría / Detalles</th>
                       <th scope="col" className="px-6 py-4 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider">Estado</th>
                       <th scope="col" className="px-6 py-4 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Stock</th>
                       <th scope="col" className="px-6 py-4 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Financiero</th>
@@ -263,9 +263,11 @@ export default function InventoryApp() {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex flex-col">
-                              <span className="text-sm text-slate-700">{p.categoria || '-'}</span>
-                              <span className="text-xs text-slate-500 flex items-center mt-0.5">
-                                {p.ubicacion || '-'}
+                              <span className="text-sm font-medium text-slate-700">{p.categoria || '-'}</span>
+                              <span className="text-[11px] text-slate-500 mt-1">
+                                {p.talla && `Talla: ${p.talla} `}
+                                {p.color && `| Color: ${p.color} `}
+                                {p.marca && `| Marca: ${p.marca}`}
                               </span>
                             </div>
                           </td>

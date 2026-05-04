@@ -6,7 +6,9 @@ export default function ProductModal({ isOpen, onClose, product, onSave }) {
     sku: '',
     nombre: '',
     categoria: '',
-    ubicacion: '',
+    talla: '',
+    color: '',
+    marca: '',
     stockInicial: 0,
     entradas: 0,
     salidas: 0,
@@ -25,7 +27,9 @@ export default function ProductModal({ isOpen, onClose, product, onSave }) {
         sku: product.sku || '',
         nombre: product.nombre || '',
         categoria: product.categoria || '',
-        ubicacion: product.ubicacion || '',
+        talla: product.talla || '',
+        color: product.color || '',
+        marca: product.marca || '',
         stockInicial: product.stockInicial || 0,
         entradas: product.entradas || 0,
         salidas: product.salidas || 0,
@@ -40,7 +44,9 @@ export default function ProductModal({ isOpen, onClose, product, onSave }) {
         sku: '',
         nombre: '',
         categoria: '',
-        ubicacion: '',
+        talla: '',
+        color: '',
+        marca: '',
         stockInicial: 0,
         entradas: 0,
         salidas: 0,
@@ -104,8 +110,18 @@ export default function ProductModal({ isOpen, onClose, product, onSave }) {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Ubicación</label>
-              <input type="text" name="ubicacion" value={formData.ubicacion} onChange={handleChange} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:outline-none" placeholder="Estante A-1" />
+              <label className="block text-sm font-medium text-slate-700 mb-1">Talla</label>
+              <input type="text" name="talla" value={formData.talla} onChange={handleChange} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:outline-none" placeholder="S, M, L, XL" />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1">Color</label>
+              <input type="text" name="color" value={formData.color} onChange={handleChange} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:outline-none" placeholder="Rojo, Azul" />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1">Marca</label>
+              <input type="text" name="marca" value={formData.marca} onChange={handleChange} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:outline-none" placeholder="Nike, Adidas" />
             </div>
 
             <div className="col-span-1 md:col-span-2 mt-4">

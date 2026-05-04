@@ -38,18 +38,20 @@ function doGet(e) {
       sku: row[0],
       nombre: row[1],
       categoria: row[2],
-      ubicacion: row[3],
-      stockInicial: row[4],
-      entradas: row[5],
-      salidas: row[6],
-      stockActual: row[7], // Generalmente calculado por fórmula: =E2+F2-G2
-      stockMinimo: row[8],
-      costo: row[9],
-      precio: row[10],
-      valorTotal: row[11], // Calculado: =H2*J2
-      proveedor: row[12],
-      fechaUltimaEntrada: row[13],
-      estado: row[14]
+      talla: row[3],
+      color: row[4],
+      marca: row[5],
+      stockInicial: row[6],
+      entradas: row[7],
+      salidas: row[8],
+      stockActual: row[9],
+      stockMinimo: row[10],
+      costo: row[11],
+      precio: row[12],
+      valorTotal: row[13],
+      proveedor: row[14],
+      fechaUltimaEntrada: row[15],
+      estado: row[16]
     };
   });
   
@@ -69,7 +71,7 @@ function doPost(e) {
     if (action === "create") {
       const p = payload.data;
       sheet.appendRow([
-        p.sku, p.nombre, p.categoria, p.ubicacion, 
+        p.sku, p.nombre, p.categoria, p.talla, p.color, p.marca, 
         p.stockInicial, p.entradas, p.salidas, 
         p.stockInicial + p.entradas - p.salidas, // Stock Actual
         p.stockMinimo, p.costo, p.precio, 
@@ -103,25 +105,27 @@ function doPost(e) {
       if (action === "update") {
         const p = payload.data;
         // Sólo actualizamos columnas no calculadas o, de ser necesario, sobrescribimos todo.
-        // Asume orden: SKU, Nombre, Categ, Ubic, S.Ini, Entr, Sal, S.Act, S.Min, Costo, Precio, Total, Prov, Fecha
-        const rowRange = sheet.getRange(rowIndex, 1, 1, 14); 
+        // Asume orden: SKU, Nombre, Categ, Talla, Color, Marca, S.Ini, Entr, Sal, S.Act, S.Min, Costo, Precio, Total, Prov, Fecha
+        const rowRange = sheet.getRange(rowIndex, 1, 1, 16); 
         // Generar arreglo de nueva fila:
-        const currentData = sheet.getRange(rowIndex, 1, 1, 15).getValues()[0];
+        const currentData = sheet.getRange(rowIndex, 1, 1, 17).getValues()[0];
         const newRow = [
           p.sku || currentData[0],
           p.nombre !== undefined ? p.nombre : currentData[1],
           p.categoria !== undefined ? p.categoria : currentData[2],
-          p.ubicacion !== undefined ? p.ubicacion : currentData[3],
-          p.stockInicial !== undefined ? p.stockInicial : currentData[4],
-          p.entradas !== undefined ? p.entradas : currentData[5],
-          p.salidas !== undefined ? p.salidas : currentData[6],
-          currentData[7], // Stock Actual lo mantenemos con fórmula o cálculo manual si prefieres
-          p.stockMinimo !== undefined ? p.stockMinimo : currentData[8],
-          p.costo !== undefined ? p.costo : currentData[9],
-          p.precio !== undefined ? p.precio : currentData[10],
-          currentData[11], // Valor Total
-          p.proveedor !== undefined ? p.proveedor : currentData[12],
-          p.fechaUltimaEntrada !== undefined ? p.fechaUltimaEntrada : currentData[13]
+          p.talla !== undefined ? p.talla : currentData[3],
+          p.color !== undefined ? p.color : currentData[4],
+          p.marca !== undefined ? p.marca : currentData[5],
+          p.stockInicial !== undefined ? p.stockInicial : currentData[6],
+          p.entradas !== undefined ? p.entradas : currentData[7],
+          p.salidas !== undefined ? p.salidas : currentData[8],
+          p.stockActual !== undefined ? p.stockActual : currentData[9], // Actualiza Stock Actual
+          p.stockMinimo !== undefined ? p.stockMinimo : currentData[10],
+          p.costo !== undefined ? p.costo : currentData[11],
+          p.precio !== undefined ? p.precio : currentData[12],
+          p.valorTotal !== undefined ? p.valorTotal : currentData[13], // Actualiza Valor Total
+          p.proveedor !== undefined ? p.proveedor : currentData[14],
+          p.fechaUltimaEntrada !== undefined ? p.fechaUltimaEntrada : currentData[15]
         ];
         
         rowRange.setValues([newRow]);
