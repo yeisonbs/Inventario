@@ -19,7 +19,19 @@ export default function InventoryApp() {
     setLoading(true);
     setError(null);
     try {
-      const data = await getInventory();
+      const rawData = await getInventory();
+      // Recalcular matemáticamente siempre para asegurar precisión 
+      // frente a ediciones manuales en Google Sheets
+      const data = rawData.map(p => {
+        const inicial = Number(p.stockInicial) || 0;
+        const entradas = Number(p.entradas) || 0;
+        const salidas = Number(p.salidas) || 0;
+        const costo = Number(p.costo) || 0;
+        
+        p.stockActual = inicial + entradas - salidas;
+        p.valorTotal = p.stockActual * costo;
+        return p;
+      });
       setProducts(data);
     } catch (err) {
       setError('Error al cargar el inventario. Verifique la conexión o configure PUBLIC_API_URL.');
