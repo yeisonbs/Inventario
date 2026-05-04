@@ -35,6 +35,13 @@ export default function InventoryApp() {
 
   const handleSaveProduct = async (formData) => {
     try {
+      // Calcular campos automáticos
+      const inicial = Number(formData.stockInicial) || 0;
+      const entradas = Number(formData.entradas) || 0;
+      const salidas = Number(formData.salidas) || 0;
+      formData.stockActual = inicial + entradas - salidas;
+      formData.valorTotal = formData.stockActual * (Number(formData.costo) || 0);
+
       if (productModal.product) {
         // Is edit
         await updateProduct(formData.sku, formData);
@@ -63,11 +70,12 @@ export default function InventoryApp() {
         updatedData.salidas = (Number(p.salidas) || 0) + Math.abs(amount);
       }
       
-      // Recalcular stockActual antes de enviarlo
+      // Recalcular stockActual y valorTotal antes de enviarlo
       const inicial = Number(updatedData.stockInicial) || 0;
       const entradas = Number(updatedData.entradas) || 0;
       const salidas = Number(updatedData.salidas) || 0;
       updatedData.stockActual = inicial + entradas - salidas;
+      updatedData.valorTotal = updatedData.stockActual * (Number(updatedData.costo) || 0);
       
       await updateProduct(sku, updatedData);
       await fetchProducts();
